@@ -32,9 +32,9 @@ func NewAppTrans(cfg *WxConfig) (*AppTrans, error) {
 // Submit the order to weixin pay and return the prepay id if success,
 // Prepay id is used for app to start a payment
 // If fail, error is not nil, check error for more information
-func (this *AppTrans) Submit(orderId string, amount float64, desc string, clientIp string) (string, error) {
+func (this *AppTrans) Submit(orderId string, amount int64, desc string, clientIp string) (string, error) {
 
-	odrInXml := this.signedOrderRequestXmlString(orderId, fmt.Sprintf("%.0f", amount), desc, clientIp)
+	odrInXml := this.signedOrderRequestXmlString(orderId, fmt.Sprintf("%d", amount), desc, clientIp)
 	resp, err := doHttpPost(this.Config.PlaceOrderUrl, []byte(odrInXml))
 	if err != nil {
 		return "", err
